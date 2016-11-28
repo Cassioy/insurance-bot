@@ -382,7 +382,7 @@ app.post('/api/orders', function (req, res, next) {
 var conversationCredentials = appEnv.getServiceCreds("insurance-bot-conversation");
 var conversationUsername = process.env.CONVERSATION_USERNAME || conversationCredentials.username;
 var conversationPassword = process.env.CONVERSATION_PASSWORD || conversationCredentials.password;
-var conversationWorkspace = process.env.CONVERSATION_WORKSPACE;
+var conversationWorkspace = process.env.CONVERSATION_WORKSPACE || "a2d6191a-5ba3-4578-adc5-3fa1c3edad84";
 console.log("Using Watson Conversation with username", conversationUsername, "and workspace", conversationWorkspace);
 
 var conversation = watson.conversation( {
@@ -439,7 +439,7 @@ app.post('/api/chatlogs', function(req, res) {
     var owner = req.body.owner;
     var conversation = req.body.conversation;
     var logs = req.body.logs;
-    
+
     // If a document already exists just update the logs. If new then add logs and other fields.
     // findOneAndUpdate does both $set and $setOnInsert at the same time
     var update = {$set:{lastContext: req.body.lastContext, logs:logs}, $setOnInsert:{
@@ -449,13 +449,13 @@ app.post('/api/chatlogs', function(req, res) {
         }};
     var options = { upsert: true, returnNewDocument: true };
     var query = {'conversation': conversation};
-	
+
     Log.findOneAndUpdate(query, update, options, function(err, doc){
         if (err) {
             console.log("Error with log: ",err);
             return res.status(err.code || 500).json(err);
-        } 
-        
+        }
+
         if(doc) {
             console.log("Log update success for conversation id of ",conversation);
             io.sockets.emit('logDoc',req.body);
@@ -463,7 +463,7 @@ app.post('/api/chatlogs', function(req, res) {
             return res.json(doc);
         }
     });
-	
+
 
 }); // End app.post 'api/chatlogs'
 
@@ -475,9 +475,9 @@ var port = process.env.VCAP_APP_PORT || 5014;
 
 io.on('connection', function(socket){
 	console.log("Sockets connected.");
-	
+
 	// Whenever a new client connects send them the latest data
-	
+
 	socket.on('disconnect', function(){
 		console.log("Socket disconnected.");
 	});

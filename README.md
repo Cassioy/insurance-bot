@@ -1,10 +1,10 @@
-# Cloud Insurance Co. - Main web site and chat bot
+# Cloud Life Insurance - Main web site and chat bot
 
 | **master** | [![Build Status](https://travis-ci.org/IBM-Bluemix/insurance-bot.svg?branch=master)](https://travis-ci.org/IBM-Bluemix/insurance-bot) |
 | ----- | ----- |
 | **dev** | [![Build Status](https://travis-ci.org/IBM-Bluemix/insurance-bot.svg?branch=dev)](https://travis-ci.org/IBM-Bluemix/insurance-bot) |
 
-This repository is part of the larger [Cloud Insurance Co.](https://github.com/IBM-Bluemix/cloudco-insurance) project.
+This repository is part of the larger [Cloud Life Insurance](https://github.com/IBM-Bluemix/cloudco-insurance) project.
 
 # Overview
 
