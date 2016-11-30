@@ -28,6 +28,7 @@
     overflow-x: hidden;
     color: #597a96;
     border: 1px dashed #12aaeb;
+    background: white;
 }
 
 .dialoginput {
@@ -41,6 +42,7 @@
     padding: 10px;
     color: #225282;
     max-width: 240px;
+    outline: none;
 }
 
 .message {

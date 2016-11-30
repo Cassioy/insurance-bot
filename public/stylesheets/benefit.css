@@ -11,7 +11,7 @@ align-items: center;
 
 .benefitdata {
     /*    border: 1px solid #aaa;*/
-    min-width: 340px;
+    min-width: 400px;
     display: flex;
     flex-direction: column;
     margin: 10px;
@@ -117,7 +117,7 @@ align-items: center;
 }
 
 .benefitimage {
-    height: 26px;
+    height: 28px;
     min-width: 30px;
     margin-right: 10px;
 }
@@ -205,32 +205,39 @@ align-items: center;
 }
 
 .interactions {
-    min-width: 340px;
+    min-width: 300px;
     margin: 10px;
     min-height: 200px;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
+    background: #fcfefe;
+    border-left: 4px solid #e7f6fd;
+    border-right: 1px dotted #e7f6fd;
 }
 
 .interactionheader {
     text-align: right;
     color: #12aaeb;
     margin: 10px;
+    margin-right: 20px;
     font-size: 16px;
     font-weight: bold;
     letter-spacing: 1px;
     text-transform: uppercase;
-    margin-right: 0;
+    margin-right: 20px;
+    align-self: flex-end;
 }
 
 .interactionsub {
     text-align: right;
     color: #225282;
     margin-left: 10px;
+    margin-right: 20px;
     font-size: 12px;
     font-weight: bold;
     margin-bottom: 30px;
+    align-self: flex-end;
 }
 
 .claimbox {
@@ -293,4 +300,24 @@ align-items: center;
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+.leader {
+    display: flex;
+    flex-direction: row;
+}
+
+.interactionwords {
+    width: 200px;
+}
+
+.interactionimage {
+    width: 70px;
+    height: 70px;
+    margin-left: 10px;
+    background-attachment: inherit;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 56px;
+    background-image: url("../images/ana.svg");
 }
