@@ -16,39 +16,53 @@ var chrono = require('chrono-node');
 
 // load local VCAP configuration
 var vcapLocal = null
-// try {
-//     vcapLocal = require("./vcap-local.json");
-//     console.log("Loaded local VCAP", vcapLocal);
-// } catch (e) {
-//     console.error(e);
-// }
-//
-// // get the app environment from Cloud Foundry, defaulting to local VCAP
-// var appEnvOpts = vcapLocal ? {
-//     vcap: vcapLocal
-// } : {}
+try {
+    vcapLocal = require("./vcap-local.json");
+    console.log("Loaded local VCAP", vcapLocal);
+} catch (e) {
+    console.error(e);
+}
 
-
-var appEnvOpts = {};
-
+// get the app environment from Cloud Foundry, defaulting to local VCAP
+var appEnvOpts = vcapLocal ? {
+    vcap: vcapLocal
+} : {}
 var appEnv = cfenv.getAppEnv(appEnvOpts);
+
+
 
 var appName;
 if (appEnv.isLocal) {
     require('dotenv').load();
 }
 
+console.log('PROCESS ENV\n\n');
+
+console.log(process.env);
+
+console.log('PROCESS ENV\n\n');
+
+console.log('ANTON\n\n');
+
+
+console.log('ANTON\n\n');
+
+
+console.log('APP ENV\n\n');
+
+console.log(appEnv.services.conversation);
+
+console.log('APP ENV\n\n');
+
+
 // =====================================
 // CREATE THE SERVICE WRAPPER ==========
 // =====================================
 // Create the service wrapper
 var conversationCredentials = appEnv.getServiceCreds("cloudlife-conversation");
-
-console.log(conversationCredentials);
-
 var conversationUsername = process.env.CONVERSATION_USERNAME || conversationCredentials.username;
 var conversationPassword = process.env.CONVERSATION_PASSWORD || conversationCredentials.password;
-var conversationWorkspace = process.env.CONVERSATION_WORKSPACE || "a2d6191a-5ba3-4578-adc5-3fa1c3edad84";
+var conversationWorkspace = "68128b6e-8160-4d89-b7ef-dadde8c025d2";
 console.log("Using Watson Conversation with username", conversationUsername, "and workspace", conversationWorkspace);
 
 var conversation = watson.conversation({
@@ -254,7 +268,7 @@ function buildContextObject(req, callback) {
                     reprompt.message = "Sorry, Marty McFly, you can't make a claim in the future. Please try the date again.";
                     return callback(null, reprompt);
                 } else { // Otherwise format the date to YYYY-MM-DD - Ana will also verify
-                    var month = '' + (userDate.getUTCMonth()+1),
+                    var month = '' + (userDate.getUTCMonth() + 1),
                         day = '' + (userDate.getUTCDate()),
                         year = userDate.getFullYear();
 

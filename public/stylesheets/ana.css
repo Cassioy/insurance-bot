@@ -16,10 +16,10 @@
     min-width: 226px;
     border-radius: 4px;
     padding: 5px;
-    background-image: -moz-linear-gradient(bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url("../images/ana.svg");
+    /*background-image: -moz-linear-gradient(bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url("../images/ana.svg");
     background-image: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url("../images/ana.svg");
     background-image: -ms-linear-gradient(bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url("../images/ana.svg");
-    background-image: linear-gradient(bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url("../images/ana.svg");
+    background-image: linear-gradient(bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url("../images/ana.svg");*/
     background-attachment: inherit;
     background-position: center center;
     background-repeat: no-repeat;
@@ -27,7 +27,7 @@
     overflow-y: auto;
     overflow-x: hidden;
     color: #597a96;
-    border: 1px solid #12aaeb;
+    border: 1px dashed #12aaeb;
 }
 
 .dialoginput {
@@ -52,53 +52,102 @@
 
 .ana {
     padding: 0.5em;
-    border-radius: 5px;
-    background-color: #12aaeb;
+    word-spacing: 1px;
+    /* border-radius: 5px; */
+    /* background-color: #12aaeb; */
+    border-left: 7px solid #12aaeb;
+    color: #12aaeb;
     margin-left: 0.5em;
+    padding-left: 0.8em;
     margin-right: 30%;
     -webkit-align-self: flex-start;
     align-self: flex-start;
-	-webkit-animation: fadein 2s;
-       -moz-animation: fadein 2s;
-        -ms-animation: fadein 2s;
-         -o-animation: fadein 2s;
-            animation: fadein 2s;
+    -webkit-animation: fadein 1s;
+    -moz-animation: fadein 1s;
+    -ms-animation: fadein 1s;
+    -o-animation: fadein 1s;
+    animation: fadein 1s;
+}
+
+.anaTitle {
+    color: #aaa;
+    font-size: 9px;
+    /* font-weight: bold; */
+    margin-bottom: 5px;
+    margin-left: 6px;
+    display: none;
 }
 
 .user {
     padding: 0.5em;
-    border-radius: 5px;
-    background-color: rgba(34, 82, 130, 0.9);
+    /* border-radius: 5px; */
+    /* background-color: #eb12aa; */
+    border-right: 7px solid #225282;
+    text-align: right;
+    padding-right: 0.7em;
+    color: #225282;
     margin-right: 0.5em;
     margin-left: 30%;
     -webkit-align-self: flex-end;
     align-self: flex-end;
-	-webkit-animation: fadein 1s;
-       -moz-animation: fadein 1s;
-        -ms-animation: fadein 1s;
-         -o-animation: fadein 1s;
-            animation: fadein 1s;
+    -webkit-animation: fadein 1s;
+    -moz-animation: fadein 1s;
+    -ms-animation: fadein 1s;
+    -o-animation: fadein 1s;
+    animation: fadein 1s;
+}
+
+.userTitle {
+    color: #aaa;
+    text-align: right;
+    font-size: 9px;
+    /* font-weight: bold; */
+    margin-bottom: 5px;
+    margin-right: 6px;
+    display: none;
 }
 
 @keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
+
 
 /* Firefox < 16 */
+
 @-moz-keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
+
 
 /* Safari, Chrome and Opera > 12.1 */
+
 @-webkit-keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
+
 /* Internet Explorer */
+
 @-ms-keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }

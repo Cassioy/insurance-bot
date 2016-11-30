@@ -49,7 +49,7 @@ console.log("Catalog URL is", catalog_url);
 console.log("Orders URL is", orders_url);
 
 var mongoDbUrl, mongoDbOptions = {};
-var mongoDbCredentials = appEnv.getServiceCreds("insurance-bot-db") || appEnv.services["compose-for-mongodb"][0].credentials;
+var mongoDbCredentials = appEnv.getServiceCreds("cloudlife-mongo") || appEnv.services["compose-for-mongodb"][0].credentials;
 if (mongoDbCredentials) {
     var ca = [new Buffer(mongoDbCredentials.ca_certificate_base64, 'base64')];
     mongoDbUrl = mongoDbCredentials.uri;
@@ -214,6 +214,8 @@ app.get('/history', isLoggedIn, function(req, res) {
             }
         })
 
+        allclaims.sort(dateSortDescending);
+
         var output = {
             owner: req.user.local.email,
             fname: req.user.local.fname,
@@ -289,7 +291,7 @@ function fileClaim(owner, claim, callback) {
                         claim.outcome = 'PARTIAL';
                         claim.payment = amountAvailable;
                         policy.amountClaimed = policy.Limit;
-                        message = "You have reached max coverage. Remaining $"+ amountAvailable + " of policy limit applied.";
+                        message = "You have reached max coverage. Remaining $" + amountAvailable + " of policy limit applied.";
                     }
 
                     if (possibleEligibility < amountAvailable) {
@@ -300,7 +302,7 @@ function fileClaim(owner, claim, callback) {
                     }
 
                     policy.claims.push(claim);
-                    console.log("Claim is: ",claim);
+                    console.log("Claim is: ", claim);
 
                     doc.save(function(err) {
 
@@ -502,17 +504,17 @@ function processChatMessage(req, res) {
                 claimFile.provider = context.claim_provider;
                 claimFile.amount = context.claim_amount;
 
-                console.log("Filing data: "+owner+ " claimFile: " + JSON.stringify(claimFile));
+                console.log("Filing data: " + owner + " claimFile: " + JSON.stringify(claimFile));
 
                 fileClaim(owner, claimFile, function(err, reply) {
 
                     data.output.text = '';
                     data.context.claim_step = '';
 
-                    console.log("Reply for claim file: ",reply);
+                    console.log("Reply for claim file: ", reply);
 
                     if (reply && reply.outcome === 'success') {
-                        data.output.text = "Your " + context.claim_procedure + " claim for " + amount + " was successfully filed! "+reply.message;
+                        data.output.text = "Your " + context.claim_procedure + " claim for " + amount + " was successfully filed! " + reply.message;
                         res.status(200).json(data);
 
                     } else {
@@ -527,6 +529,26 @@ function processChatMessage(req, res) {
         }
     });
 }
+
+
+// Date helpers
+
+var dateSortAscending = function(claim1, claim2) {
+    // This is a comparison function that will result in dates being sorted in
+    // ASCENDING order. As you can see, JavaScript's native comparison operators
+    // can be used to compare dates. This was news to me.
+    if (claim1.date > claim2.date) return 1;
+    if (claim1.date < claim2.date) return -1;
+    return 0;
+};
+
+var dateSortDescending = function(claim1, claim2) {
+    // This is a comparison function that will result in dates being sorted in
+    // DESCENDING order.
+    if (claim1.date > claim2.date) return -1;
+    if (claim1.date < claim2.date) return 1;
+    return 0;
+};
 
 
 // launch ======================================================================
