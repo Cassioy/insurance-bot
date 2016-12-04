@@ -247,6 +247,10 @@ function toggleDetails(id) {
         if (benefit === id) {
             validbenefit = true;
         }
+
+        var element = document.getElementById(benefit);
+        element.style.display = 'none'
+
     })
 
     if (details != null & validbenefit) {
