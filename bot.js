@@ -36,24 +36,6 @@ if (appEnv.isLocal) {
     require('dotenv').load();
 }
 
-console.log('PROCESS ENV\n\n');
-
-console.log(process.env);
-
-console.log('PROCESS ENV\n\n');
-
-console.log('ANTON\n\n');
-
-
-console.log('ANTON\n\n');
-
-
-console.log('APP ENV\n\n');
-
-console.log(appEnv.services.conversation);
-
-console.log('APP ENV\n\n');
-
 
 // =====================================
 // CREATE THE SERVICE WRAPPER ==========
@@ -63,6 +45,7 @@ var conversationCredentials = appEnv.getServiceCreds("cloudlife-conversation");
 var conversationUsername = process.env.CONVERSATION_USERNAME || conversationCredentials.username;
 var conversationPassword = process.env.CONVERSATION_PASSWORD || conversationCredentials.password;
 var conversationWorkspace = "68128b6e-8160-4d89-b7ef-dadde8c025d2";
+
 console.log("Using Watson Conversation with username", conversationUsername, "and workspace", conversationWorkspace);
 
 var conversation = watson.conversation({
@@ -115,6 +98,10 @@ var chatbot = {
             } else if (params) {
                 // Send message to the conversation service with the current context
                 conversation.message(params, function(err, data) {
+
+                    console.log('conversation data');
+
+                    console.log(data);
 
                     if (err) {
                         console.log("Error in sending message: ", err);

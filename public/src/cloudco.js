@@ -4,7 +4,7 @@
 var userPolicy;
 var policyTypes;
 var policyProcedures;
-var fname,lname;
+var fname, lname;
 
 function openTravel() {
     window.location = "travel.html";
@@ -36,7 +36,7 @@ function makeAccount() {
 
     xhr.open('POST', encodeURI(uri));
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onload = function (response) {
+    xhr.onload = function(response) {
 
         var reply = JSON.parse(xhr.responseText);
         if (xhr.status === 200) {
@@ -72,7 +72,7 @@ function login() {
 
     xhr.open('POST', encodeURI(uri));
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onload = function (response) {
+    xhr.onload = function(response) {
         if (xhr.status === 200) {
 
             console.log('response');
@@ -99,7 +99,7 @@ function login() {
 
 function get(path, callback) {
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function () {
+    xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             callback(JSON.parse(xmlhttp.responseText));
         }
@@ -132,7 +132,7 @@ function getClaims() {
 
     checkStatus();
 
-    get('./history', function (reply) {
+    get('./history', function(reply) {
         console.log(reply);
 
         var header = document.getElementById('owner');
@@ -140,7 +140,7 @@ function getClaims() {
 
         var claimlist = document.getElementById('claimlist');
 
-        reply.claims.forEach(function (claim) {
+        reply.claims.forEach(function(claim) {
             var row = makeHistoryRow(claim);
             claimlist.appendChild(row);
         });
@@ -151,6 +151,7 @@ function getClaims() {
 function createBenefitRow(policy) {
     var row = document.createElement('div');
     row.className = 'benefitrow';
+    // row.id = policy.title;
     row.innerHTML = '<div class="benefiticon">' +
         '<img class="benefitimage" src="images/health/' + policy.icon + '.svg">' +
         '</div>' +
@@ -158,7 +159,7 @@ function createBenefitRow(policy) {
         '<div class="benefitmarker"></div>' +
         '</div>' +
         '<div class="benefitTitle">' + policy.title + '</div>';
-    row.onclick = function () {
+    row.onclick = function() {
         toggleDetails(policy.title);
     }
 
@@ -238,12 +239,14 @@ function createBenefitDetail(policy) {
 function toggleDetails(id) {
     var details = document.getElementById(id);
 
-    if (details.style.display !== 'flex') {
-        details.style.display = 'flex';
-    } else {
-        details.style.display = 'none'
-    }
+    if (details != null) {
 
+        if (details.style.display !== 'flex') {
+            details.style.display = 'flex';
+        } else {
+            details.style.display = 'none'
+        }
+    }
 }
 
 function unique(value, index, self) {
@@ -255,8 +258,8 @@ function getBenefits() {
 
     checkStatus();
 
-    get('./healthBenefits', function (reply) {
-		userPolicy = reply;
+    get('./healthBenefits', function(reply) {
+        userPolicy = reply;
 
         var header = document.getElementById('owner');
         header.innerHTML = fname + ' ' + lname;
@@ -265,16 +268,16 @@ function getBenefits() {
         var policyAreas = [];
         var policyKeys = [];
         var policyTitles = [];
-		policyProcedures = [];
-		var proc = [];
+        policyProcedures = [];
+        var proc = [];
 
         var benefitset = document.getElementById('benefitset');
 
-        policies.forEach(function (policy) {
+        policies.forEach(function(policy) {
 
             if (policyAreas[policy.type]) {
                 policyAreas[policy.type].push(policy);
-				proc.push(policy.title);
+                proc.push(policy.title);
             } else {
                 policyAreas[policy.type] = [];
                 policyAreas[policy.type].push(policy);
@@ -282,14 +285,14 @@ function getBenefits() {
 
                 var benefitEntity = createBenefitEntity(policy.type);
                 benefitset.appendChild(benefitEntity);
-				
-				if(proc.length>0){
-					policyProcedures.push(proc);
 
-					proc = [];
-				}
-				
-				proc.push(policy.title);
+                if (proc.length > 0) {
+                    policyProcedures.push(proc);
+
+                    proc = [];
+                }
+
+                proc.push(policy.title);
             }
 
             policyTitles.push(policy.title);
@@ -301,18 +304,18 @@ function getBenefits() {
 
             anchor.appendChild(benefitRow);
             anchor.appendChild(benefitDetail);
-			
-			policyTypes = policyKeys;
+
+            policyTypes = policyKeys;
         });
-		
-		// Push the last array into the procedures array
-		policyProcedures.push(proc);
-		
+
+        // Push the last array into the procedures array
+        policyProcedures.push(proc);
+
         var uniquebenefits = policyTitles.filter(unique); // returns ['a', 1, 2, '1']
 
         var select = document.getElementById('benefittypes');
 
-        uniquebenefits.forEach(function (benefit) {
+        uniquebenefits.forEach(function(benefit) {
             var option = document.createElement('option');
             option.value = benefit;
             option.innerHTML = benefit;
@@ -324,34 +327,34 @@ function getBenefits() {
 
         var today = moment().format('YYYY-MM-DD');
         datepicker.value = today;
-        
+
         // Load Ana's first message after the user info
         userMessage('');
     })
 }
 
 function submitClaim(source) {
-	var bot = false;
-	console.log("Source is: ",source);
-	
-	if(source === watson) {
-		bot = true;
-	}
-	
-	var claimFile = {
-		date: null,
-		benefit: null,
-		provider: null,
-		amount: null
-		};
-	
-	if(source===watson){
-		claimFile.date = context.claim_date;
-		claimFile.benefit = context.claim_procedure;
-		claimFile.provider = context.claim_provider;
-		claimFile.amount = context.claim_amount;
-	} else {
-		var dateElement = document.getElementById('claimdate');
+    var bot = false;
+    console.log("Source is: ", source);
+
+    if (source === watson) {
+        bot = true;
+    }
+
+    var claimFile = {
+        date: null,
+        benefit: null,
+        provider: null,
+        amount: null
+    };
+
+    if (source === watson) {
+        claimFile.date = context.claim_date;
+        claimFile.benefit = context.claim_procedure;
+        claimFile.provider = context.claim_provider;
+        claimFile.amount = context.claim_amount;
+    } else {
+        var dateElement = document.getElementById('claimdate');
         var benefitElement = document.getElementById('benefittypes');
         var providerElement = document.getElementById('provider');
         var amountElement = document.getElementById('claimamount');
@@ -360,7 +363,7 @@ function submitClaim(source) {
         claimFile.benefit = benefitElement.value;
         claimFile.provider = providerElement.value;
         claimFile.amount = amountElement.value;
-	}
+    }
 
     var xhr = new XMLHttpRequest();
 
@@ -370,41 +373,41 @@ function submitClaim(source) {
 
     xhr.open('POST', uri, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onload = function (response) {
+    xhr.onload = function(response) {
         if (xhr.status === 200 && xhr.responseText) {
-			var reply = JSON.parse(xhr.responseText);
-			console.log(bot);
-			
+            var reply = JSON.parse(xhr.responseText);
+            console.log(bot);
+
             if (reply.outcome === 'success') {
-				if(bot === true ) {
-					console.log('success');
-					displayMessage("Your claim was successfully filed!",watson);
-					context.claim_step='';
-				} else {
-					claimmessages.innerHTML = 'Your claim was filed.';
-				}
+                if (bot === true) {
+                    console.log('success');
+                    displayMessage("Your claim was successfully filed!", watson);
+                    context.claim_step = '';
+                } else {
+                    claimmessages.innerHTML = 'Your claim was filed.';
+                }
             } else {
                 email = '';
                 password = '';
-				if(bot === true) {
-					displayMessage("Oh no! Something went wrong. Please try again.",watson);
-					context = '';
-				} else {
-					claimmessages.innerHTML = 'Something went wrong - try again';
-				}
+                if (bot === true) {
+                    displayMessage("Oh no! Something went wrong. Please try again.", watson);
+                    context = '';
+                } else {
+                    claimmessages.innerHTML = 'Something went wrong - try again';
+                }
             }
         } else {
             alert('Request failed.  Returned status of ' + xhr.status);
         }
     };
-	
-	console.log("Submitting claim: ",JSON.stringify(claimFile));
+
+    console.log("Submitting claim: ", JSON.stringify(claimFile));
     xhr.send(JSON.stringify(claimFile));
 }
 
 function checkStatus() {
 
-    get('./isLoggedIn', function (reply) {
+    get('./isLoggedIn', function(reply) {
 
         var login = document.getElementById('login');
         var logout = document.getElementById('logout');
@@ -431,13 +434,13 @@ function checkStatus() {
 }
 
 // Enter is pressed
-function newEvent(e,target) {
+function newEvent(e, target) {
     if (e.which === 13 || e.keyCode === 13) {
-		
-		if(target==="login"){
-			login();
-		}
-	}
+
+        if (target === "login") {
+            login();
+        }
+    }
 }
 
 checkStatus();

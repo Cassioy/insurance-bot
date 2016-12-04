@@ -453,6 +453,10 @@ app.post('/api/orders', function(req, res, next) {
 // =====================================
 app.post('/api/ana', function(req, res) {
 
+    console.log('called ana');
+
+    console.log(req.body);
+
     // ensure user policies are loaded
     if (!req.body.context || !req.body.context.system) {
         getUserPolicy(req, function(err, doc) {

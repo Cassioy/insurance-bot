@@ -79,6 +79,17 @@ function userMessage(message) {
 
             console.log("Got response from Ana: ", JSON.stringify(response));
 
+            var anaresponse = response;
+
+            if (anaresponse.entities != undefined && anaresponse.entities.length > 0) {
+                console.log(anaresponse.entities[0].value);
+
+                var topic = anaresponse.entities[0].value;
+
+                toggleDetails(topic);
+
+            }
+
             displayMessage(text, watson);
 
         } else {
@@ -103,7 +114,7 @@ function getTimestamp() {
     var ampm = hours >= 12 ? 'pm' : 'am';
     hours = hours % 12;
     hours = hours ? hours : 12;
-    minutes = minutes < 10 ? '0'+minutes : minutes;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
     var strTime = hours + ':' + minutes + ' ' + ampm;
     return strTime;
 }
@@ -125,12 +136,12 @@ function displayMessage(text, user) {
 
     // Set chat bubble color and position based on the user parameter
     if (user === watson) {
-      var name = "Ana";
-      bubble.innerHTML = "<div class='anaTitle'>" + name + " | " + getTimestamp() + "</div><div class='ana'>" + text + "</div>";
+        var name = "Ana";
+        bubble.innerHTML = "<div class='anaTitle'>" + name + " | " + getTimestamp() + "</div><div class='ana'>" + text + "</div>";
     } else {
         var name = "John";
-        if(context && context.fname && context.fname.length > 0){
-          name = context.fname;
+        if (context && context.fname && context.fname.length > 0) {
+            name = context.fname;
         }
         bubble.innerHTML = "<div class='userTitle'>" + name + " | " + getTimestamp() + "</div><div class='user'>" + text + "</div>";
     }
