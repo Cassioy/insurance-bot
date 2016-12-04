@@ -147,11 +147,13 @@ function getClaims() {
     })
 }
 
+var benefitnames = [];
+
 
 function createBenefitRow(policy) {
     var row = document.createElement('div');
     row.className = 'benefitrow';
-    // row.id = policy.title;
+    benefitnames.push(policy.title);
     row.innerHTML = '<div class="benefiticon">' +
         '<img class="benefitimage" src="images/health/' + policy.icon + '.svg">' +
         '</div>' +
@@ -239,7 +241,15 @@ function createBenefitDetail(policy) {
 function toggleDetails(id) {
     var details = document.getElementById(id);
 
-    if (details != null) {
+    var validbenefit = false;
+
+    benefitnames.forEach(function(benefit) {
+        if (benefit === id) {
+            validbenefit = true;
+        }
+    })
+
+    if (details != null & validbenefit) {
 
         if (details.style.display !== 'flex') {
             details.style.display = 'flex';

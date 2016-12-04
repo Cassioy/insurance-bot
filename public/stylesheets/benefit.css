@@ -75,8 +75,6 @@ align-items: center;
     align-content: center;
     justify-content: center;
     align-items: center;
-    height: auto;
-    transition: height 0.8s;
 }
 
 .benefitset {
